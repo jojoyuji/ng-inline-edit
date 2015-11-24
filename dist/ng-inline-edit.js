@@ -161,7 +161,8 @@
           scope: {
             model: '=inlineEdit',
             callback: '&inlineEditCallback',
-            validate: '&inlineEditValidation'
+            validate: '&inlineEditValidation',
+            classes: '@inlineEditClasses'
           },
           link: function(scope, element, attrs) {
             scope.model = scope.$parent.$eval(attrs.inlineEdit);
@@ -174,16 +175,15 @@
               scope.isOnBlurBehaviorValid = true;
               scope.cancelOnBlur = onBlurBehavior === InlineEditConstants.CANCEL;
             }
-
             var container = angular.element(
-              '<div class="ng-inline-edit" ' +
+              '<div class="ng-inline-edit ' + scope.classes + ' " ' +
                 'ng-class="{\'ng-inline-edit--validating\': validating, ' +
                   '\'ng-inline-edit--error\': validationError}">');
 
             var input = angular.element(
               (scope.isInputTextarea ?
                 '<textarea ' : '<input type="text" ') +
-                'class="ng-inline-edit__input" ' +
+                'class="ng-inline-edit__input ' + scope.classes + '" ' +
                 'ng-disabled="validating" ' +
                 'ng-show="editMode" ' +
                 'ng-keyup="onInputKeyup($event)" ' +
