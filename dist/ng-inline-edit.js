@@ -90,8 +90,8 @@
             }
 
             var validationResult = $scope.validate({
-                newValue: $scope.inputValue
-              });
+              newValue: $scope.inputValue
+            });
 
             if (validationResult && validationResult.then) { // promise
               validationResult
@@ -100,7 +100,7 @@
                 .finally(_onEnd);
 
             } else if (validationResult ||
-                typeof validationResult === 'undefined') {
+              typeof validationResult === 'undefined') {
               _onSuccess();
               _onEnd(true);
 
@@ -131,6 +131,12 @@
                 break;
             }
           }
+          if ($scope.bind2way) {
+            $scope.model = $scope.inputValue;
+            $scope.callback({
+              newValue: $scope.inputValue
+            });
+          }
         };
 
         $scope.onDocumentClick = function(event) {
@@ -144,6 +150,7 @@
     ]);
 
 })(window, window.angular);
+
 
 (function(window, angular, undefined) {
   'use strict';
@@ -162,6 +169,7 @@
             model: '=inlineEdit',
             callback: '&inlineEditCallback',
             validate: '&inlineEditValidation',
+            bind2way: '=inlineEditBind',
             classes: '@inlineEditClasses'
           },
           link: function(scope, element, attrs) {
@@ -171,24 +179,24 @@
             var onBlurBehavior = attrs.hasOwnProperty('inlineEditOnBlur') ?
               attrs.inlineEditOnBlur : InlineEditConfig.onBlur;
             if (onBlurBehavior === InlineEditConstants.CANCEL ||
-                onBlurBehavior === InlineEditConstants.SAVE) {
+              onBlurBehavior === InlineEditConstants.SAVE) {
               scope.isOnBlurBehaviorValid = true;
               scope.cancelOnBlur = onBlurBehavior === InlineEditConstants.CANCEL;
             }
             var container = angular.element(
               '<div class="ng-inline-edit ' + scope.classes + ' " ' +
-                'ng-class="{\'ng-inline-edit--validating\': validating, ' +
-                  '\'ng-inline-edit--error\': validationError}">');
+              'ng-class="{\'ng-inline-edit--validating\': validating, ' +
+              '\'ng-inline-edit--error\': validationError}">');
 
             var input = angular.element(
               (scope.isInputTextarea ?
                 '<textarea ' : '<input type="text" ') +
-                'class="ng-inline-edit__input ' + scope.classes + '" ' +
-                'ng-disabled="validating" ' +
-                'ng-show="editMode" ' +
-                'ng-keyup="onInputKeyup($event)" ' +
-                'ng-model="inputValue" ' +
-                'placeholder="{{placeholder}}" />');
+              'class="ng-inline-edit__input ' + scope.classes + '" ' +
+              'ng-disabled="validating" ' +
+              'ng-show="editMode" ' +
+              'ng-keyup="onInputKeyup($event)" ' +
+              'ng-model="inputValue" ' +
+              'placeholder="{{placeholder}}" />');
 
             var innerContainer = angular.element(
               '<div class="ng-inline-edit__inner-container"></div>');
@@ -196,12 +204,12 @@
             // text
             innerContainer.append(angular.element(
               '<span class="ng-inline-edit__text" ' +
-                'ng-class="{\'ng-inline-edit__text--placeholder\': !model}" ' +
-                (attrs.hasOwnProperty('inlineEditOnClick') || InlineEditConfig.editOnClick ?
-                  'ng-click="editText()" ' : '') +
-                'ng-if="!editMode">{{(model || placeholder)' +
-                  (attrs.hasOwnProperty('inlineEditFilter') ? ' | ' + attrs.inlineEditFilter : '') +
-                  '}}</span>'));
+              'ng-class="{\'ng-inline-edit__text--placeholder\': !model}" ' +
+              (attrs.hasOwnProperty('inlineEditOnClick') || InlineEditConfig.editOnClick ?
+                'ng-click="editText()" ' : '') +
+              'ng-if="!editMode">{{(model || placeholder)' +
+              (attrs.hasOwnProperty('inlineEditFilter') ? ' | ' + attrs.inlineEditFilter : '') +
+              '}}</span>'));
 
             // edit button
             var inlineEditBtnEdit = attrs.hasOwnProperty('inlineEditBtnEdit') ?
@@ -209,9 +217,9 @@
             if (inlineEditBtnEdit) {
               innerContainer.append(angular.element(
                 '<a class="ng-inline-edit__button ng-inline-edit__button--edit" ' +
-                  'ng-if="!editMode" ' +
-                  'ng-click="editText()">' +
-                    inlineEditBtnEdit +
+                'ng-if="!editMode" ' +
+                'ng-click="editText()">' +
+                inlineEditBtnEdit +
                 '</a>'));
             }
 
@@ -221,9 +229,9 @@
             if (inlineEditBtnSave) {
               innerContainer.append(angular.element(
                 '<a class="ng-inline-edit__button ng-inline-edit__button--save" ' +
-                  'ng-if="editMode && !validating" ' +
-                  'ng-click="applyText(false, false)">' +
-                    inlineEditBtnSave +
+                'ng-if="editMode && !validating" ' +
+                'ng-click="applyText(false, false)">' +
+                inlineEditBtnSave +
                 '</a>'));
             }
 
@@ -233,9 +241,9 @@
             if (inlineEditBtnCancel) {
               innerContainer.append(angular.element(
                 '<a class="ng-inline-edit__button ng-inline-edit__button--cancel" ' +
-                  'ng-if="editMode && !validating" ' +
-                  'ng-click="applyText(true, false)">' +
-                    inlineEditBtnCancel +
+                'ng-if="editMode && !validating" ' +
+                'ng-click="applyText(true, false)">' +
+                inlineEditBtnCancel +
                 '</a>'));
             }
 
@@ -262,12 +270,14 @@
                 scope.model = '0';
               }
             });
+
           }
         };
       }
     ]);
 
 })(window, window.angular);
+
 
 (function(window, angular, undefined) {
   'use strict';

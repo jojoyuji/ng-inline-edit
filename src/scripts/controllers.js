@@ -66,8 +66,8 @@
             }
 
             var validationResult = $scope.validate({
-                newValue: $scope.inputValue
-              });
+              newValue: $scope.inputValue
+            });
 
             if (validationResult && validationResult.then) { // promise
               validationResult
@@ -76,7 +76,7 @@
                 .finally(_onEnd);
 
             } else if (validationResult ||
-                typeof validationResult === 'undefined') {
+              typeof validationResult === 'undefined') {
               _onSuccess();
               _onEnd(true);
 
@@ -107,6 +107,12 @@
                 break;
             }
           }
+          if ($scope.bind2way) {
+            $scope.model = $scope.inputValue;
+            $scope.callback({
+              newValue: $scope.inputValue
+            });
+          }
         };
 
         $scope.onDocumentClick = function(event) {
@@ -120,3 +126,4 @@
     ]);
 
 })(window, window.angular);
+
