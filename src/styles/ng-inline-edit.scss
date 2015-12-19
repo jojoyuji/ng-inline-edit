@@ -14,6 +14,16 @@ $module: 'ng-inline-edit';
     display: inline-block;
   }
 
+  &__text--placeholder{
+    display:block;
+    min-width:10px;
+    min-height:20px;
+  }
+
+  &__text--placeholder:empty{
+    border: 1px dashed #ccc;
+  }
+
   &__button {
     cursor: pointer;
   }

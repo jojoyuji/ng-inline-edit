@@ -1,5 +1,5 @@
 /**
- * ng-inline-edit v0.7.0 (http://tamerayd.in/ng-inline-edit)
+ * ng-inline-edit v0.9.0 (http://tamerayd.in/ng-inline-edit)
  * Copyright 2015 Tamer Aydin (http://tamerayd.in)
  * Licensed under MIT
  */
@@ -12,6 +12,14 @@
 
 .ng-inline-edit__inner-container {
   display: inline-block; }
+
+.ng-inline-edit__text--placeholder {
+  display: block;
+  min-width: 10px;
+  min-height: 20px; }
+
+.ng-inline-edit__text--placeholder:empty {
+  border: 1px dashed #ccc; }
 
 .ng-inline-edit__button {
   cursor: pointer; }
