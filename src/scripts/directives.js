@@ -16,6 +16,7 @@
             callback: '&inlineEditCallback',
             validate: '&inlineEditValidation',
             bind2way: '=inlineEditBind',
+            onBlurCallback: '&inlineEditOnBlurCallback',
             classes: '@inlineEditClasses'
           },
           link: function(scope, element, attrs) {
@@ -42,6 +43,8 @@
               'ng-show="editMode" ' +
               'ng-keyup="onInputKeyup($event)" ' +
               'ng-model="inputValue" ' +
+              (attrs.inlineEditOnBlurCallback ?
+              'ng-blur="onBlur(inputValue)"' : '') +
               'placeholder="{{placeholder}}" />');
 
             var innerContainer = angular.element(

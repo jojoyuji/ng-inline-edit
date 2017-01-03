@@ -39,6 +39,7 @@ Pass your model to ``inline-edit`` attribute on your HTML element and provide a 
 
   inline-edit-classes="classes go here" // sets the inpu/textarea classes for integrations with other plugins/css styling
   inline-edit-bind="true" // if true updates the model without prompt save/blur
+  inline-edit-on-blur-callback="fn()" // triggers function after blur event
 
   inline-edit-textarea // uses <textarea> instead <input> & disables Enter key submit
 -->

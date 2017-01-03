@@ -1,6 +1,6 @@
 /**
- * ng-inline-edit v0.9.0 (http://tamerayd.in/ng-inline-edit)
- * Copyright 2015 Tamer Aydin (http://tamerayd.in)
+ * ng-inline-edit v0.9.1 (http://tamerayd.in/ng-inline-edit)
+ * Copyright 2017 Tamer Aydin (http://tamerayd.in)
  * Licensed under MIT
  */
 (function(window, angular, undefined) {
@@ -139,6 +139,12 @@
           }
         };
 
+        $scope.onBlur = function(model) {
+          if (typeof $scope.onBlurCallback() === 'function') {
+            return $scope.onBlurCallback()(model);
+          }
+        };
+
         $scope.onDocumentClick = function(event) {
           if (!$scope.validating) {
             if (event.target !== $scope.editInput[0]) {
@@ -170,6 +176,7 @@
             callback: '&inlineEditCallback',
             validate: '&inlineEditValidation',
             bind2way: '=inlineEditBind',
+            onBlurCallback: '&inlineEditOnBlurCallback',
             classes: '@inlineEditClasses'
           },
           link: function(scope, element, attrs) {
@@ -196,6 +203,8 @@
               'ng-show="editMode" ' +
               'ng-keyup="onInputKeyup($event)" ' +
               'ng-model="inputValue" ' +
+              (attrs.inlineEditOnBlurCallback ?
+              'ng-blur="onBlur(inputValue)"' : '') +
               'placeholder="{{placeholder}}" />');
 
             var innerContainer = angular.element(

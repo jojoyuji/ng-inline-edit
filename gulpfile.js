@@ -110,7 +110,7 @@ gulp.task('server', function(cb) {
       index: 'index.html',
       cache: false
     })
-  ).listen(8080, cb);
+  ).listen(7654, cb);
 });
 
 gulp.task('test-unit', function(cb) {

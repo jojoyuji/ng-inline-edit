@@ -115,6 +115,12 @@
           }
         };
 
+        $scope.onBlur = function(model) {
+          if (typeof $scope.onBlurCallback() === 'function') {
+            return $scope.onBlurCallback()(model);
+          }
+        };
+
         $scope.onDocumentClick = function(event) {
           if (!$scope.validating) {
             if (event.target !== $scope.editInput[0]) {

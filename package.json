@@ -53,6 +53,7 @@
   },
   "scripts": {
     "test": "gulp test-unit && gulp test-e2e",
-    "start": "gulp watch"
+    "start": "gulp test-unit",
+    "build": "gulp build"
   }
 }
