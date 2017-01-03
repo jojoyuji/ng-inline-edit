@@ -7,7 +7,7 @@ var rename = require('gulp-rename');
 var header = require('gulp-header');
 var sass = require('gulp-sass');
 var livereload = require('gulp-livereload');
-var protractor = require("gulp-protractor").protractor;
+var protractor = require('gulp-protractor').protractor;
 var del = require('del');
 var runSequence = require('run-sequence');
 var stylish = require('jshint-stylish');
@@ -100,15 +100,6 @@ gulp.task('banner', function() {
       pkg: pkg
     }))
     .pipe(gulp.dest(PATH.DIST));
-});
-
-gulp.task('watch', ['server'], function() {
-  livereload.listen({
-    basePath: './',
-    reloadPage: 'demo/index.html'
-  });
-  gulp.watch(SOURCE.SCRIPTS + '*.js', ['jshint']);
-  gulp.watch(SOURCE.STYLES + '*.scss', ['sass']);
 });
 
 var server;
